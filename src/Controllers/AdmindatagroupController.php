@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace VitesseCms\Core\Controllers;
+namespace VitesseCms\Datagroup\Controllers;
 
 use VitesseCms\Admin\AbstractAdminController;
 use VitesseCms\Core\Interfaces\RepositoriesInterface;
