@@ -21,13 +21,14 @@ class DatagroupFactory
     ): Datagroup {
         $datagroup = new Datagroup();
         $datagroup->set('name', $title, true);
-        $datagroup->set('template', $template);
-        $datagroup->set('component', $component);
-        $datagroup->set('datafields', $datafields);
-        $datagroup->set('published', $published);
-        $datagroup->set('sitemap', $includeInSitemap);
-        $datagroup->set('parentId', $parentId);
-        $datagroup->set('itemOrdering', $itemOrdering);
+        $datagroup->setTenplate($template)
+            ->setComponent($component)
+            ->setDatafields($datafields)
+            ->setPublished($published)
+            ->setSitemap($includeInSitemap)
+            ->setParent($parentId)
+            ->setItemOrdering($itemOrdering)
+        ;
 
         if ($parentId !== null && MongoUtil::isObjectId($parentId)) :
             $parentDatagroup = Datagroup::findById($parentId);

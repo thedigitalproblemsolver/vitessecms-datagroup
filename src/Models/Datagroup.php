@@ -52,6 +52,26 @@ class Datagroup extends AbstractCollection
      */
     public $slugDelimiter;
 
+    /**
+     * @var string
+     */
+    public $tenplate;
+
+    /**
+     * @var string
+     */
+    public $component;
+
+    /**
+     * @var bool
+     */
+    public $sitemap;
+
+    /**
+     * @var string
+     */
+    public $itemOrdering;
+
     public function onConstruct(): void
     {
         $this->excludeFields = [];
@@ -133,6 +153,13 @@ class Datagroup extends AbstractCollection
         return $this->datafields ?? [];
     }
 
+    public function setDatafields(array $datafields): Datagroup
+    {
+        $this->datafields = $datafields;
+
+        return $this;
+    }
+
     public function getSlugDatafields(): array
     {
         return $this->slugDatafields ?? [];
@@ -189,5 +216,33 @@ class Datagroup extends AbstractCollection
     public function getSlugDelimiter(): string
     {
         return $this->slugDelimiter ?? '';
+    }
+
+    public function setTenplate(string $tenplate): Datagroup
+    {
+        $this->tenplate = $tenplate;
+
+        return $this;
+    }
+
+    public function setComponent(string $component): Datagroup
+    {
+        $this->component = $component;
+
+        return $this;
+    }
+
+    public function setSitemap(bool $sitemap): Datagroup
+    {
+        $this->sitemap = $sitemap;
+
+        return $this;
+    }
+
+    public function setItemOrdering(string $itemOrdering): Datagroup
+    {
+        $this->itemOrdering = $itemOrdering;
+
+        return $this;
     }
 }
