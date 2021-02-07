@@ -1,0 +1,28 @@
+{
+  "name": "vitessecms/datagroup",
+  "type": "library",
+  "description": "Datagroup module for VitesseCms",
+  "keywords": ["php","phalcon","vitessecms"],
+  "homepage": "https://github.com/thedigitalproblemsolver/VitesseCMS",
+  "license": "GPL-2.0-or-later",
+  "version": "0.0.1",
+  "authors": [
+    {
+      "name": "Jasper Jaklofsky",
+      "email": "info@thedigitalproblemsolver.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "VitesseCms\\Datagroup\\": "src/"
+    }
+  },
+  "require": {
+    "vitessecms/admin": "~0.0.15",
+    "vitessecms/core": "~0.0.4",
+    "vitessecms/database": "~0.0.2",
+    "vitessecms/datafield": "~0.0.5",
+    "vitessecms/form": "~0.0.7",
+    "vitessecms/block": "~0.0.10"
+  }
+}
