@@ -3,6 +3,7 @@
 namespace VitesseCms\Datagroup\Listeners;
 
 use Phalcon\Events\Manager;
+use VitesseCms\Datagroup\Controllers\AdmindatagroupController;
 use VitesseCms\Datagroup\Listeners\AdmindatagroupControllerListener;
 
 class InitiateAdminListeners
@@ -10,6 +11,6 @@ class InitiateAdminListeners
     public static function setListeners(Manager $eventsManager): void
     {
         $eventsManager->attach('adminMenu', new AdminMenuListener());
-        $eventsManager->attach('AdmindatagroupController', new AdmindatagroupControllerListener());
+        $eventsManager->attach(AdmindatagroupController::class, new AdmindatagroupControllerListener());
     }
 }
