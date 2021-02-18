@@ -7,7 +7,13 @@ use VitesseCms\Datagroup\Models\Datagroup;
 
 class DatagroupHelper
 {
-    public static function getPathToRoot(Datagroup $datagroup, array $fields = []): array {
+    public static function getPathFromRoot(Datagroup $datagroup): array
+    {
+        return array_reverse(self::getPathToRoot($datagroup));
+    }
+
+    public static function getPathToRoot(Datagroup $datagroup, array $fields = []): array
+    {
         $fields[] = $datagroup;
         if ($datagroup->getParentId() !== null) :
             $fields = self::getPathToRoot(
@@ -19,16 +25,12 @@ class DatagroupHelper
         return $fields;
     }
 
-    public static function getPathFromRoot(Datagroup $datagroup ): array
+    public static function getChildrenFromRoot(Datagroup $datagroup, array $datagroups = []): array
     {
-        return array_reverse(self::getPathToRoot($datagroup));
-    }
-
-    public static function getChildrenFromRoot(Datagroup $datagroup, array $datagroups = []): array {
         $datagroups[] = $datagroup;
         Datagroup::setFindValue('parentId', (string)$datagroup->getId());
         $groups = Datagroup::findAll();
-        if(\count($groups)) :
+        if (\count($groups)) :
             /** @var Datagroup $group */
             foreach ($groups as $group) :
                 $datagroups = self::getChildrenFromRoot($group, $datagroups);

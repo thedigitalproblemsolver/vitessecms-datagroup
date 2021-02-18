@@ -15,62 +15,51 @@ class Datagroup extends AbstractCollection
     /**
      * @var array
      */
-    protected $excludeFields;
-
-    /**
-     * @var array
-     */
     public $slugDatafields;
-
     /**
      * @var array
      */
     public $seoTitleDatafields;
-
     /**
      * @var array
      */
     public $seoTitleCategories;
-
     /**
      * @var array
      */
     public $datafields;
-
     /**
      * @var array
      */
     public $slugCategories;
-
     /**
      * @var bool
      */
     public $hasFilterableFields;
-
     /**
      * @var string
      */
     public $slugDelimiter;
-
     /**
      * @var string
      */
     public $tenplate;
-
     /**
      * @var string
      */
     public $component;
-
     /**
      * @var bool
      */
     public $sitemap;
-
     /**
      * @var string
      */
     public $itemOrdering;
+    /**
+     * @var array
+     */
+    protected $excludeFields;
 
     public function onConstruct(): void
     {
@@ -112,7 +101,7 @@ class Datagroup extends AbstractCollection
                         $attributes->setDefaultValue($datafield->defaultValue);
                     endif;
 
-                    $field->buildItemFormElement($form, $datafield, $attributes,$data);
+                    $field->buildItemFormElement($form, $datafield, $attributes, $data);
                 endif;
             endif;
         endforeach;
@@ -120,6 +109,18 @@ class Datagroup extends AbstractCollection
         if ($data !== null && $data->getId()) :
             $form->addHidden('id', (string)$data->getId());
         endif;
+    }
+
+    public function getDatafields(): array
+    {
+        return $this->datafields ?? [];
+    }
+
+    public function setDatafields(array $datafields): Datagroup
+    {
+        $this->datafields = $datafields;
+
+        return $this;
     }
 
     public function getAdminlistName(): string
@@ -144,18 +145,6 @@ class Datagroup extends AbstractCollection
             $dataFields[$datafieldId] = DatagroupFactory::createDatafieldEntry($datafield);
             $this->datafields = $dataFields;
         endif;
-
-        return $this;
-    }
-
-    public function getDatafields(): array
-    {
-        return $this->datafields ?? [];
-    }
-
-    public function setDatafields(array $datafields): Datagroup
-    {
-        $this->datafields = $datafields;
 
         return $this;
     }

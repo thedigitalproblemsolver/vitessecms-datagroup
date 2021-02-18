@@ -61,10 +61,10 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
                 $row->key = $key;
                 $row->buttons = [
                     [
-                        'text'   => ItemHelper::getPublishText($slugCategorie['published']),
-                        'icon'   => ItemHelper::getPublishIcon($slugCategorie['published']),
+                        'text' => ItemHelper::getPublishText($slugCategorie['published']),
+                        'icon' => ItemHelper::getPublishIcon($slugCategorie['published']),
                         'action' => 'togglePublishSlugCategory',
-                        'rowId'  => 'publish_slug' . $slugCategorie['id'],
+                        'rowId' => 'publish_slug' . $slugCategorie['id'],
                     ],
                 ];
 
@@ -111,10 +111,10 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
                 $row->key = $key;
                 $row->buttons = [
                     [
-                        'text'   => ItemHelper::getPublishText($slugCategorie['published']),
-                        'icon'   => ItemHelper::getPublishIcon($slugCategorie['published']),
+                        'text' => ItemHelper::getPublishText($slugCategorie['published']),
+                        'icon' => ItemHelper::getPublishIcon($slugCategorie['published']),
                         'action' => 'togglePublishSeoTitleCategory',
-                        'rowId'  => 'publish_seoTitle' . $slugCategorie['id'],
+                        'rowId' => 'publish_seoTitle' . $slugCategorie['id'],
                     ],
                 ];
 
@@ -137,9 +137,9 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
             && !isset($dataFields[(string)$this->request->getPost('datafield')])
         ) :
             $dataFields[$this->request->getPost('datafield')] = [
-                'id'         => $this->request->getPost('datafield'),
-                'published'  => false,
-                'required'   => false,
+                'id' => $this->request->getPost('datafield'),
+                'published' => false,
+                'required' => false,
                 'filterable' => false,
             ];
             $item->datafields = $dataFields;
@@ -170,6 +170,31 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
         $this->redirect();
     }
 
+    protected function toggle(string $fieldName, string $collection = 'datafields'): Datagroup
+    {
+        Datagroup::setFindPublished(false);
+        $datagroup = Datagroup::findById($this->dispatcher->getParam(0));
+        $dataFields = $datagroup->_($collection);
+        if (isset($dataFields[$this->request->get('key')])) :
+            if (
+                isset($dataFields[$this->request->get('key')][$fieldName])
+                && $dataFields[$this->request->get('key')][$fieldName] === true
+            ) :
+                $dataFields[$this->request->get('key')][$fieldName] = false;
+            else :
+                $dataFields[$this->request->get('key')][$fieldName] = true;
+            endif;
+
+            $datagroup->set($collection, $dataFields)->save();
+
+            $this->flash->setSucces('ADMIN_STATE_CHANGE_SUCCESS', [ucfirst($fieldName)]);
+        else :
+            $this->flash->setError('ADMIN_STATE_CHANGE_FAILED', [ucfirst($fieldName)]);
+        endif;
+
+        return $datagroup;
+    }
+
     public function toggleRequiredDatafieldAction(): void
     {
         $this->toggle('required');
@@ -181,8 +206,7 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
     {
         $datagroup = $this->toggle('filterable');
         $datagroup->set('hasFilterableFields', DatagroupHelper::hasFilterableFields($datagroup))
-            ->save()
-        ;
+            ->save();
 
         $this->redirect();
     }
@@ -283,16 +307,6 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
         $this->saveFieldsSorting('datafields');
     }
 
-    public function saveSlugSortingAction(): void
-    {
-        $this->saveFieldsSorting('slugDatafields');
-    }
-
-    public function saveSeoTitleSortingAction(): void
-    {
-        $this->saveFieldsSorting('seoTitleCategories');
-    }
-
     protected function saveFieldsSorting(string $fieldName): void
     {
         Datagroup::setFindPublished(false);
@@ -317,28 +331,13 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
         $this->redirect();
     }
 
-    protected function toggle(string $fieldName, string $collection = 'datafields'): Datagroup
+    public function saveSlugSortingAction(): void
     {
-        Datagroup::setFindPublished(false);
-        $datagroup = Datagroup::findById($this->dispatcher->getParam(0));
-        $dataFields = $datagroup->_($collection);
-        if (isset($dataFields[$this->request->get('key')])) :
-            if (
-                isset($dataFields[$this->request->get('key')][$fieldName])
-                && $dataFields[$this->request->get('key')][$fieldName] === true
-            ) :
-                $dataFields[$this->request->get('key')][$fieldName] = false;
-            else :
-                $dataFields[$this->request->get('key')][$fieldName] = true;
-            endif;
+        $this->saveFieldsSorting('slugDatafields');
+    }
 
-            $datagroup->set($collection, $dataFields)->save();
-
-            $this->flash->setSucces('ADMIN_STATE_CHANGE_SUCCESS', [ucfirst($fieldName)]);
-        else :
-            $this->flash->setError('ADMIN_STATE_CHANGE_FAILED', [ucfirst($fieldName)]);
-        endif;
-
-        return $datagroup;
+    public function saveSeoTitleSortingAction(): void
+    {
+        $this->saveFieldsSorting('seoTitleCategories');
     }
 }

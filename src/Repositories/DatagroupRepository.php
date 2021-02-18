@@ -9,19 +9,6 @@ use VitesseCms\Database\Models\FindValueIterator;
 class DatagroupRepository
 {
 
-    public function getById(string $id, bool $hideUnpublished = true): ?Datagroup
-    {
-        Datagroup::setFindPublished($hideUnpublished);
-
-        /** @var Datagroup $datagroup */
-        $datagroup = Datagroup::findById($id);
-        if (is_object($datagroup)):
-            return $datagroup;
-        endif;
-
-        return null;
-    }
-
     public function findAllByParentId(string $parentId, bool $hideUnpublished = true): DatagroupIterator
     {
         Datagroup::setFindValue('parentId', $parentId);
@@ -40,10 +27,26 @@ class DatagroupRepository
         return new DatagroupIterator(Datagroup::findAll());
     }
 
+    protected function parsefindValues(?FindValueIterator $findValues = null): void
+    {
+        if ($findValues !== null) :
+            while ($findValues->valid()) :
+                $findValue = $findValues->current();
+                Datagroup::setFindValue(
+                    $findValue->getKey(),
+                    $findValue->getValue(),
+                    $findValue->getType()
+                );
+                $findValues->next();
+            endwhile;
+        endif;
+    }
+
     public function findFirst(
         ?FindValueIterator $findValues = null,
         bool $hideUnpublished = true
-    ): ?Datagroup {
+    ): ?Datagroup
+    {
         Datagroup::setFindPublished($hideUnpublished);
         $this->parsefindValues($findValues);
 
@@ -56,11 +59,17 @@ class DatagroupRepository
         return null;
     }
 
+    public function getPathFromRoot(Datagroup $datagroup): DatagroupIterator
+    {
+        return new DatagroupIterator(array_reverse($this->getPathToRoot($datagroup)->getArrayCopy()));
+    }
+
     public function getPathToRoot(
         Datagroup $datagroup,
         ?DatagroupIterator $datagroupIterator = null
-    ): DatagroupIterator {
-        if($datagroupIterator === null) {
+    ): DatagroupIterator
+    {
+        if ($datagroupIterator === null) {
             $datagroupIterator = new DatagroupIterator();
         }
 
@@ -75,23 +84,16 @@ class DatagroupRepository
         return $datagroupIterator;
     }
 
-    public function getPathFromRoot(Datagroup $datagroup ): DatagroupIterator
+    public function getById(string $id, bool $hideUnpublished = true): ?Datagroup
     {
-        return new DatagroupIterator(array_reverse($this->getPathToRoot($datagroup)->getArrayCopy()));
-    }
+        Datagroup::setFindPublished($hideUnpublished);
 
-    protected function parsefindValues(?FindValueIterator $findValues = null): void
-    {
-        if ($findValues !== null) :
-            while ($findValues->valid()) :
-                $findValue = $findValues->current();
-                Datagroup::setFindValue(
-                    $findValue->getKey(),
-                    $findValue->getValue(),
-                    $findValue->getType()
-                );
-                $findValues->next();
-            endwhile;
+        /** @var Datagroup $datagroup */
+        $datagroup = Datagroup::findById($id);
+        if (is_object($datagroup)):
+            return $datagroup;
         endif;
+
+        return null;
     }
 }

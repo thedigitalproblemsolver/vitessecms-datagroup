@@ -58,40 +58,40 @@ class AdmindatagroupControllerListener
                     $row->key = $key;
                     $row->buttons = [
                         [
-                            'text'   => ItemHelper::getPublishText($field['published']),
-                            'icon'   => ItemHelper::getPublishIcon($field['published']),
+                            'text' => ItemHelper::getPublishText($field['published']),
+                            'icon' => ItemHelper::getPublishIcon($field['published']),
                             'action' => 'togglePublishDatafield',
-                            'rowId'  => 'publish_' . $field['id'],
+                            'rowId' => 'publish_' . $field['id'],
                         ],
                         [
-                            'text'   => 'Filterable',
-                            'icon'   => ItemHelper::getIcon($field['filterable'], 'filter '),
+                            'text' => 'Filterable',
+                            'icon' => ItemHelper::getIcon($field['filterable'], 'filter '),
                             'action' => 'toggleFilterableDatafield',
                         ],
                         [
-                            'text'   => 'Exportable',
-                            'icon'   => ItemHelper::getIcon($field['exportable'], 'table '),
+                            'text' => 'Exportable',
+                            'icon' => ItemHelper::getIcon($field['exportable'], 'table '),
                             'action' => 'toggleExportableDatafield',
                         ],
                         [
-                            'text'   => ItemHelper::getRequiredText($field['required']),
-                            'icon'   => ItemHelper::getRequiredIcon($field['required']),
+                            'text' => ItemHelper::getRequiredText($field['required']),
+                            'icon' => ItemHelper::getRequiredIcon($field['required']),
                             'action' => 'toggleRequiredDatafield',
                         ],
 
                     ];
                     $row->slugButtons = [
                         [
-                            'text'   => ItemHelper::getPublishText($field['slugPublished']),
-                            'icon'   => ItemHelper::getPublishIcon($field['slugPublished']),
+                            'text' => ItemHelper::getPublishText($field['slugPublished']),
+                            'icon' => ItemHelper::getPublishIcon($field['slugPublished']),
                             'action' => 'togglePublishSlug',
                         ],
                     ];
 
                     $row->seoTitleButtons = [
                         [
-                            'text'   => ItemHelper::getPublishText($field['seoTitlePublished']),
-                            'icon'   => ItemHelper::getPublishIcon($field['seoTitlePublished']),
+                            'text' => ItemHelper::getPublishText($field['seoTitlePublished']),
+                            'icon' => ItemHelper::getPublishIcon($field['seoTitlePublished']),
                             'action' => 'togglePublishSeoTitle',
                         ],
                     ];
@@ -127,10 +127,10 @@ class AdmindatagroupControllerListener
                     $row->key = $key;
                     $row->buttons = [
                         [
-                            'text'   => ItemHelper::getPublishText($field['published']),
-                            'icon'   => ItemHelper::getPublishIcon($field['published']),
+                            'text' => ItemHelper::getPublishText($field['published']),
+                            'icon' => ItemHelper::getPublishIcon($field['published']),
                             'action' => 'togglePublishSeoTitle',
-                            'rowId'  => 'publish_seoTitle' . $field['id'],
+                            'rowId' => 'publish_seoTitle' . $field['id'],
                         ],
                     ];
 
@@ -153,10 +153,10 @@ class AdmindatagroupControllerListener
                     $row->key = $key;
                     $row->buttons = [
                         [
-                            'text'   => ItemHelper::getPublishText($field['published']),
-                            'icon'   => ItemHelper::getPublishIcon($field['published']),
+                            'text' => ItemHelper::getPublishText($field['published']),
+                            'icon' => ItemHelper::getPublishIcon($field['published']),
                             'action' => 'togglePublishSlug',
-                            'rowId'  => 'publish_slug' . $field['id'],
+                            'rowId' => 'publish_slug' . $field['id'],
                         ],
                     ];
 
@@ -170,7 +170,7 @@ class AdmindatagroupControllerListener
             $controller->configuration->getVendorNameDir() . 'datagroup/src/Resources/views/',
             [
                 'id' => $datagroup->getId(),
-                'tableId' => uniqid('',false),
+                'tableId' => uniqid('', false),
                 'rows' => $rows,
                 'baseLink' => $link,
             ]
@@ -182,17 +182,17 @@ class AdmindatagroupControllerListener
             [
                 'rows' => $slugRows,
                 'categories' => $controller->getSlugCategories($datagroup),
-                'tableId' => uniqid('',false)
+                'tableId' => uniqid('', false)
             ]
         );
 
-        $dataHtml .=$controller->view->renderTemplate(
+        $dataHtml .= $controller->view->renderTemplate(
             'adminDatagroupSeoTitlelist',
             $controller->configuration->getVendorNameDir() . 'datagroup/src/Resources/views/',
             [
                 'rows' => $seoTitleRows,
                 'categories' => $controller->getSeoTitleCategories($datagroup),
-                'tableId' => uniqid('',false)
+                'tableId' => uniqid('', false)
             ]
         );
 
