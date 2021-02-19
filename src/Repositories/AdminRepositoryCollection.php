@@ -20,7 +20,8 @@ class AdminRepositoryCollection implements BaseRepositoriesInterface
     public function __construct(
         DatagroupRepository $datagroupRepository,
         DatafieldRepository $datafieldRepository
-    ) {
+    )
+    {
         $this->datagroup = $datagroupRepository;
         $this->datafield = $datafieldRepository;
     }

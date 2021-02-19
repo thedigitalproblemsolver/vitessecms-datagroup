@@ -18,7 +18,8 @@ class DatagroupFactory
         bool $includeInSitemap = false,
         string $parentId = null,
         string $itemOrdering = ''
-    ): Datagroup {
+    ): Datagroup
+    {
         $datagroup = new Datagroup();
         $datagroup->set('name', $title, true);
         $datagroup->setTenplate($template)
@@ -27,8 +28,7 @@ class DatagroupFactory
             ->setPublished($published)
             ->setSitemap($includeInSitemap)
             ->setParent($parentId)
-            ->setItemOrdering($itemOrdering)
-        ;
+            ->setItemOrdering($itemOrdering);
 
         if ($parentId !== null && MongoUtil::isObjectId($parentId)) :
             $parentDatagroup = Datagroup::findById($parentId);
@@ -43,11 +43,12 @@ class DatagroupFactory
         bool $published = true,
         bool $required = false,
         bool $filterable = false
-    ): array {
+    ): array
+    {
         return [
-            'id'         => (string)$datafield->getId(),
-            'published'  => $published,
-            'required'   => $required,
+            'id' => (string)$datafield->getId(),
+            'published' => $published,
+            'required' => $required,
             'filterable' => $filterable,
         ];
     }

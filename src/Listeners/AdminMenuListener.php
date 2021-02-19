@@ -13,8 +13,8 @@ class AdminMenuListener
     {
         if ($adminMenu->getUser()->getPermissionRole() === 'superadmin') :
             $children = new AdminMenuNavBarChildren();
-            $children->addChild('Data groups','admin/datagroup/admindatagroup/adminList');
-            $adminMenu->addDropdown('DataDesign',$children);
+            $children->addChild('Data groups', 'admin/datagroup/admindatagroup/adminList');
+            $adminMenu->addDropdown('DataDesign', $children);
         endif;
     }
 }
