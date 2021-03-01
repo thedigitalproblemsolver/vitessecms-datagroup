@@ -125,29 +125,6 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
         return $slugRows;
     }
 
-    public function beforeSave(AbstractCollection $item)
-    {
-        if (!isset($item->datafields)) :
-            $item->datafields = [];
-        endif;
-
-        $dataFields = (array)$item->datafields;
-        if (
-            $this->request->getPost('datafield')
-            && !isset($dataFields[(string)$this->request->getPost('datafield')])
-        ) :
-            $dataFields[$this->request->getPost('datafield')] = [
-                'id' => $this->request->getPost('datafield'),
-                'published' => false,
-                'required' => false,
-                'filterable' => false,
-            ];
-            $item->datafields = $dataFields;
-        endif;
-
-        $_POST['datafield'] = null;
-    }
-
     public function deletedatafieldAction(): void
     {
         $item = Datagroup::findById($this->dispatcher->getParam(0));
