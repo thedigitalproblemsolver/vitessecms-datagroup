@@ -25,6 +25,7 @@ class DatagroupHelper
         return $fields;
     }
 
+    //TODO return iterator
     public static function getChildrenFromRoot(Datagroup $datagroup, array $datagroups = []): array
     {
         $datagroups[] = $datagroup;

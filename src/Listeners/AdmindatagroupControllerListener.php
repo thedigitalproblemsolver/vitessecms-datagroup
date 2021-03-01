@@ -213,4 +213,23 @@ class AdmindatagroupControllerListener
             'adminFilter'
         );
     }
+
+    public function beforePostBinding(Event $event, AdmindatagroupController $controller, Datagroup $datagroup): void
+    {
+        $dataFields = (array)$datagroup->getDatafields();
+        if (
+            $controller->request->getPost('datafield')
+            && !isset($dataFields[(string)$controller->request->getPost('datafield')])
+        ) :
+            $dataFields[$controller->request->getPost('datafield')] = [
+                'id' => $controller->request->getPost('datafield'),
+                'published' => false,
+                'required' => false,
+                'filterable' => false,
+            ];
+            $datagroup->setDatafields($dataFields);
+        endif;
+
+        $_POST['datafield'] = null;
+    }
 }
