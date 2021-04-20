@@ -44,7 +44,7 @@ class Datagroup extends AbstractCollection
     /**
      * @var string
      */
-    public $tenplate;
+    public $template;
     /**
      * @var string
      */
@@ -208,11 +208,16 @@ class Datagroup extends AbstractCollection
         return $this->slugDelimiter ?? '';
     }
 
-    public function setTenplate(string $tenplate): Datagroup
+    public function setTemplate(string $template): Datagroup
     {
-        $this->tenplate = $tenplate;
+        $this->template = $template;
 
         return $this;
+    }
+
+    public function getTemplate(): ?string
+    {
+        return $this->template;
     }
 
     public function setComponent(string $component): Datagroup
