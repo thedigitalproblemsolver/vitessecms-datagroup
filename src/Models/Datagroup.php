@@ -77,6 +77,7 @@ class Datagroup extends AbstractCollection
         endif;
     }
 
+    //TODO move to listener
     public function buildItemForm(AbstractForm $form, AbstractCollection $data = null): void
     {
         $datafieldRepository = new DatafieldRepository();
@@ -84,7 +85,7 @@ class Datagroup extends AbstractCollection
             if ($params['published'] !== false) :
                 $datafield = $datafieldRepository->getById($params['id']);
                 if ($datafield && !isset($this->excludeFields[$datafield->getCallingName()])) :
-                    $class = $datafield->getClass();
+                    $class = $datafield->getType();
                     /** @var AbstractField $field */
                     $field = new $class();
                     $attributes = new Attributes();
