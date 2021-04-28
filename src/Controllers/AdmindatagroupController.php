@@ -2,6 +2,7 @@
 
 namespace VitesseCms\Datagroup\Controllers;
 
+use stdClass;
 use VitesseCms\Admin\AbstractAdminController;
 use VitesseCms\Core\Interfaces\RepositoriesInterface;
 use VitesseCms\Database\AbstractCollection;
@@ -11,6 +12,8 @@ use VitesseCms\Core\Helpers\ItemHelper;
 use VitesseCms\Datagroup\Forms\DataGroupForm;
 use VitesseCms\Datagroup\Models\Datagroup;
 use VitesseCms\Core\Utils\ArrayUtil;
+use function count;
+use function is_object;
 
 class AdmindatagroupController extends AbstractAdminController implements RepositoriesInterface
 {
@@ -36,11 +39,11 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
         foreach ($DatagroupPath as $DatagroupItem) :
             $id = (string)$DatagroupItem->getId();
             if (!isset($slugTmpCategories[$id])) :
-                $slugCategories[$id] = new \stdClass();
+                $slugCategories[$id] = new stdClass();
                 $slugCategories[$id]->id = $id;
                 $slugCategories[$id]->published = false;
             else :
-                $slugCategories[$id] = new \stdClass();
+                $slugCategories[$id] = new stdClass();
                 $slugCategories[$id]->id = $id;
                 $slugCategories[$id]->published = $slugTmpCategories[$id]['published'];
             endif;
@@ -49,12 +52,12 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
         foreach ($slugCategories as $key => $slugCategorie) :
             $slugCategorie = (array)$slugCategorie;
             $model = Datagroup::findById($slugCategorie['id']);
-            if (\is_object($model) && (string)$datagroup->getId() !== $slugCategorie['id']) :
+            if (is_object($model) && (string)$datagroup->getId() !== $slugCategorie['id']) :
                 if (!isset($slugCategorie['published'])) :
                     $slugCategorie['published'] = false;
                 endif;
 
-                $row = new \stdClass();
+                $row = new stdClass();
                 $row->rowState = ItemHelper::getRowStateClass($slugCategorie['published']);
                 $row->name = $model->_('name');
                 $row->fieldId = $slugCategorie['id'];
@@ -86,11 +89,11 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
         foreach ($DatagroupPath as $DatagroupItem) :
             $id = (string)$DatagroupItem->getId();
             if (!isset($slugTmpCategories[$id])) :
-                $slugCategories[$id] = new \stdClass();
+                $slugCategories[$id] = new stdClass();
                 $slugCategories[$id]->id = $id;
                 $slugCategories[$id]->published = false;
             else :
-                $slugCategories[$id] = new \stdClass();
+                $slugCategories[$id] = new stdClass();
                 $slugCategories[$id]->id = $id;
                 $slugCategories[$id]->published = $slugTmpCategories[$id]['published'];
             endif;
@@ -99,12 +102,12 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
         foreach ($slugCategories as $key => $slugCategorie) :
             $slugCategorie = (array)$slugCategorie;
             $model = Datagroup::findById($slugCategorie['id']);
-            if (\is_object($model) && (string)$datagroup->getId() !== $slugCategorie['id']) :
+            if (is_object($model) && (string)$datagroup->getId() !== $slugCategorie['id']) :
                 if (!isset($slugCategorie['published'])) :
                     $slugCategorie['published'] = false;
                 endif;
 
-                $row = new \stdClass();
+                $row = new stdClass();
                 $row->rowState = ItemHelper::getRowStateClass($slugCategorie['published']);
                 $row->name = $model->_('name');
                 $row->fieldId = $slugCategorie['id'];
@@ -197,7 +200,7 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
             if (isset($slugDatafields[0])) :
                 unset($slugDatafields[0]);
             endif;
-            $slugDatafields[$this->request->get('key')] = new \stdClass();
+            $slugDatafields[$this->request->get('key')] = new stdClass();
             $slugDatafields[$this->request->get('key')]->id = $this->request->get('key');
             $slugDatafields[$this->request->get('key')]->published = false;
 
@@ -218,7 +221,7 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
             if (isset($slugDatafields[0])) :
                 unset($slugDatafields[0]);
             endif;
-            $slugDatafields[$this->request->get('key')] = new \stdClass();
+            $slugDatafields[$this->request->get('key')] = new stdClass();
             $slugDatafields[$this->request->get('key')]->id = $this->request->get('key');
             $slugDatafields[$this->request->get('key')]->published = false;
 
@@ -239,7 +242,7 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
             if (isset($slugDatafields[0])) :
                 unset($slugDatafields[0]);
             endif;
-            $slugDatafields[$this->request->get('key')] = new \stdClass();
+            $slugDatafields[$this->request->get('key')] = new stdClass();
             $slugDatafields[$this->request->get('key')]->id = $this->request->get('key');
             $slugDatafields[$this->request->get('key')]->published = false;
 
@@ -260,7 +263,7 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
             if (isset($slugDatafields[0])) :
                 unset($slugDatafields[0]);
             endif;
-            $slugDatafields[$this->request->get('key')] = new \stdClass();
+            $slugDatafields[$this->request->get('key')] = new stdClass();
             $slugDatafields[$this->request->get('key')]->id = $this->request->get('key');
             $slugDatafields[$this->request->get('key')]->published = false;
 
@@ -290,13 +293,13 @@ class AdmindatagroupController extends AbstractAdminController implements Reposi
         $item = Datagroup::findById($this->dispatcher->getParam(0));
         $keyOrder = $this->request->getPost('order');
 
-        if (isset($item->$fieldName) && \count($item->$fieldName) > 0) :
+        if (isset($item->$fieldName) && count($item->$fieldName) > 0) :
             $dataFields = (array)$item->$fieldName;
             $dataFields = ArrayUtil::sortArrayByArray($dataFields, $keyOrder, 'slug');
         else :
             $dataFields = [];
             foreach ((array)$keyOrder as $key => $id) :
-                $dataFields[$id] = new \stdClass();
+                $dataFields[$id] = new stdClass();
                 $dataFields[$id]->id = $id;
                 $dataFields[$id]->published = false;
             endforeach;

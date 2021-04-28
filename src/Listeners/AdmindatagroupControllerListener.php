@@ -8,7 +8,7 @@ use VitesseCms\Datagroup\Controllers\AdmindatagroupController;
 use VitesseCms\Core\Helpers\ItemHelper;
 use VitesseCms\Datagroup\Models\Datagroup;
 use Phalcon\Events\Event;
-use \stdClass;
+use stdClass;
 
 class AdmindatagroupControllerListener
 {

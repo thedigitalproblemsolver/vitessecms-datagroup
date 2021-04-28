@@ -4,6 +4,8 @@ namespace VitesseCms\Datagroup\Helpers;
 
 use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Datagroup\Models\Datagroup;
+use function count;
+use function is_object;
 
 class DatagroupHelper
 {
@@ -31,7 +33,7 @@ class DatagroupHelper
         $datagroups[] = $datagroup;
         Datagroup::setFindValue('parentId', (string)$datagroup->getId());
         $groups = Datagroup::findAll();
-        if (\count($groups)) :
+        if (count($groups)) :
             /** @var Datagroup $group */
             foreach ($groups as $group) :
                 $datagroups = self::getChildrenFromRoot($group, $datagroups);
@@ -47,7 +49,7 @@ class DatagroupHelper
             if (!empty($field['filterable'])) :
                 $datafield = Datafield::findById($field['id']);
                 /** @var Datafield $datafield */
-                if (\is_object($datafield) && $datafield->isPublished()) :
+                if (is_object($datafield) && $datafield->isPublished()) :
                     return true;
                 endif;
             endif;

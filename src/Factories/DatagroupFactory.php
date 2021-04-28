@@ -22,7 +22,7 @@ class DatagroupFactory
     {
         $datagroup = new Datagroup();
         $datagroup->set('name', $title, true);
-        $datagroup->setTenplate($template)
+        $datagroup->setTemplate($template)
             ->setComponent($component)
             ->setDatafields($datafields)
             ->setPublished($published)
