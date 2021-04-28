@@ -2,7 +2,7 @@
 
 namespace VitesseCms\Datagroup\Models;
 
-use \ArrayIterator;
+use ArrayIterator;
 
 class DatagroupIterator extends ArrayIterator
 {
