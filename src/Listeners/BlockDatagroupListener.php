@@ -6,7 +6,6 @@ use Phalcon\Events\Event;
 use VitesseCms\Block\Forms\BlockForm;
 use VitesseCms\Block\Models\Block;
 use VitesseCms\Datafield\Models\DatafieldIterator;
-use VitesseCms\Datafield\Models\FieldDatagroup;
 use VitesseCms\Datagroup\Fields\Datagroup;
 use VitesseCms\Form\Helpers\ElementHelper;
 use VitesseCms\Form\Models\Attributes;
