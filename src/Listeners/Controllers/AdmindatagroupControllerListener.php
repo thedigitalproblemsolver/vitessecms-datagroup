@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace VitesseCms\Datagroup\Listeners;
+namespace VitesseCms\Datagroup\Listeners\Controllers;
 
 use VitesseCms\Admin\AbstractAdminController;
 use VitesseCms\Admin\Forms\AdminlistFormInterface;
