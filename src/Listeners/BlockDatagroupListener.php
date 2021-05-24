@@ -19,15 +19,15 @@ class BlockDatagroupListener
             'datagroup',
             (new Attributes())
                 ->setInputClass('select2')
-                ->setOptions(ElementHelper::modelIteratorToOptions($form->di->get('repositories')->datagroup->findAll()))
+                ->setOptions(ElementHelper::modelIteratorToOptions($block->getDi()->repositories->datagroup->findAll()))
         );
 
         if (!empty($block->_('datagroup'))):
-            $datagroup = $form->di->get('repositories')->datagroup->getById($block->_('datagroup'));
+            $datagroup = $block->getDi()->repositories->datagroup->getById($block->_('datagroup'));
             if ($datagroup !== null):
                 $datafieldsIterator = new DatafieldIterator();
                 foreach ($datagroup->getDatafields() as $datafieldArray) :
-                    $datafield = $form->di->get('repositories')->datafield->getById($datafieldArray['id']);
+                    $datafield = $block->getDi()->repositories->datafield->getById($datafieldArray['id']);
                     if ($datafield !== null):
                         if ($datafield->getType() === Datagroup::class) :
                             $datafieldsIterator->add($datafield);
