@@ -22,7 +22,7 @@
     "vitessecms/core": "~0.2.5",
     "vitessecms/database": "~0.2.2",
     "vitessecms/datafield": "~0.2.9",
-    "vitessecms/form": "~0.2.3",
+    "vitessecms/form": "~0.2.4",
     "vitessecms/block": "~0.2.8"
   }
 }
