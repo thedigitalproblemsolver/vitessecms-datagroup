@@ -2,7 +2,8 @@
 
 namespace VitesseCms\Datagroup\Listeners;
 
-use Phalcon\Events\Manager;
+use VitesseCms\Core\Interfaces\InitiateListenersInterface;
+use VitesseCms\Core\Interfaces\InjectableInterface;
 use VitesseCms\Datafield\Repositories\DatafieldRepository;
 use VitesseCms\Datagroup\Blocks\Datagroup;
 use VitesseCms\Datagroup\Controllers\AdmindatagroupController;
@@ -11,13 +12,13 @@ use VitesseCms\Datagroup\Listeners\Blocks\BlockDatagroupListener;
 use VitesseCms\Datagroup\Listeners\Controllers\AdmindatagroupControllerListener;
 use VitesseCms\Datagroup\Repositories\DatagroupRepository;
 
-class InitiateAdminListeners
+class InitiateAdminListeners implements InitiateListenersInterface
 {
-    public static function setListeners(Manager $eventsManager): void
+    public static function setListeners(InjectableInterface $di): void
     {
-        $eventsManager->attach('adminMenu', new AdminMenuListener());
-        $eventsManager->attach(AdmindatagroupController::class, new AdmindatagroupControllerListener());
-        $eventsManager->attach(Datagroup::class, new BlockDatagroupListener(
+        $di->eventsManager->attach('adminMenu', new AdminMenuListener());
+        $di->eventsManager->attach(AdmindatagroupController::class, new AdmindatagroupControllerListener());
+        $di->eventsManager->attach(Datagroup::class, new BlockDatagroupListener(
             new DatagroupRepository(),
             new DatafieldRepository()
         ));

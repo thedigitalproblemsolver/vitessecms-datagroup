@@ -2,6 +2,7 @@
 
 namespace VitesseCms\Datagroup\Repositories;
 
+use VitesseCms\Database\Models\FindValue;
 use VitesseCms\Datagroup\Models\Datagroup;
 use VitesseCms\Datagroup\Models\DatagroupIterator;
 use VitesseCms\Database\Models\FindValueIterator;
@@ -95,5 +96,15 @@ class DatagroupRepository
         endif;
 
         return null;
+    }
+
+    public function getBySystemComponent(string $component): ?DatagroupIterator
+    {
+        return $this->findAll(
+            new FindValueIterator([
+                new FindValue('parentId', null),
+                new FindValue('component', $component)
+            ])
+        );
     }
 }
