@@ -13,7 +13,6 @@ use VitesseCms\Form\Helpers\ElementHelper;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
 use Phalcon\Utils\Slug;
 use VitesseCms\Form\Models\Attributes;
-use VitesseCms\Media\Enums\AssetsEnum;
 
 class Datagroup extends AbstractField
 {
@@ -67,7 +66,7 @@ class Datagroup extends AbstractField
         $attributes->setOptions(ElementHelper::arrayToSelectOptions($options));
 
         if ($datafield->_('multiple')) :
-            $attributes->setMultiple()->setInputClass(AssetsEnum::SELECT2);
+            $attributes->setMultiple()->setInputClass('select2');
         endif;
 
         $form->addDropdown(
@@ -89,7 +88,7 @@ class Datagroup extends AbstractField
             $datafield->getNameField(),
             $this->getFieldname($datafield) . '[]',
             (new Attributes())->setMultiple()
-                ->setInputClass(AssetsEnum::SELECT2)
+                ->setInputClass('select2')
                 ->setNoEmptyText()
                 ->setOptions(Item::findAll())
         );
