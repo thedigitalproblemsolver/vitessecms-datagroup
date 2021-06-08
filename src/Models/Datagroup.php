@@ -64,6 +64,8 @@ class Datagroup extends AbstractCollection
 
     public function onConstruct(): void
     {
+        parent::onConstruct();
+
         $this->excludeFields = [];
         $this->slugDatafields = [];
         $this->seoTitleDatafields = [];
