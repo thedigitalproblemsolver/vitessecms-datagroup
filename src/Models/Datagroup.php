@@ -104,8 +104,13 @@ class Datagroup extends AbstractCollection
                     elseif (isset($datafield->defaultValue)) :
                         $attributes->setDefaultValue($datafield->defaultValue);
                     endif;
-
                     $field->buildItemFormElement($form, $datafield, $attributes, $data);
+
+                    $this->di->eventsManager->fire(
+                        $datafield->getType().':buildItemFormElement',
+                        $form
+                    );
+
                 endif;
             endif;
         endforeach;
