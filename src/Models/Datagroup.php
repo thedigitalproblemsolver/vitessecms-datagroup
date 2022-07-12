@@ -41,6 +41,11 @@ class Datagroup extends AbstractCollection
      * @var string
      */
     public $slugDelimiter;
+
+    /**
+     * @var string
+     */
+    public $slugCategoryDelimiter;
     /**
      * @var string
      */
@@ -211,6 +216,11 @@ class Datagroup extends AbstractCollection
     public function getSlugDelimiter(): string
     {
         return $this->slugDelimiter ?? '';
+    }
+
+    public function slugCategoryDelimiter(): string
+    {
+        return $this->slugCategoryDelimiter ?? '';
     }
 
     public function getTemplate(): ?string
