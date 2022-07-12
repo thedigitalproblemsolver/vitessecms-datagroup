@@ -13,5 +13,9 @@ class AdminMenuListener
         $children = new AdminMenuNavBarChildren();
         $children->addChild('Data groups', 'admin/datagroup/admindatagroup/adminList');
         $adminMenu->addDropdown('DataDesign', $children);
+
+        $children = new AdminMenuNavBarChildren();
+        $children->addChild('Fix datagroups', 'admin/datagroup/adminfixdatagroups/index');
+        $adminMenu->addDropdown('Maintenance', $children);
     }
 }
