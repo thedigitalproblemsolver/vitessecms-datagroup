@@ -7,26 +7,26 @@
         data-ajaxurl="{{BASE_URI}}admin/core/admindatagroup/savecategorieslugsorting/{{id}}"
 >
     {{#categories}}
-    <tr
-            id="{{fieldId}}"
-            class="{{rowState}}"
-    >
-        <td>
-            {{name}}
-        </td>
-        <td align="right">
-            {{#buttons}}
-            <a
-                    {{#rowId}}
-                    id="{{rowId}}"
-                    {{/rowId}}
-            href="{{baseLink}}/{{action}}/{{id}}&key={{key}}"
-            class="{{icon}}"
-            title="{{text}}"
-            ></a>
-            {{/buttons}}
-        </td>
-    </tr>
+        <tr
+                id="{{fieldId}}"
+                class="{{rowState}}"
+        >
+            <td>
+                {{name}}
+            </td>
+            <td align="right">
+                {{#buttons}}
+                    <a
+                        {{#rowId}}
+                        id="{{rowId}}"
+                        {{/rowId}}
+                        href="{{baseLink}}/{{action}}/{{id}}&key={{key}}"
+                    class="{{icon}}"
+                    title="{{text}}"
+                    ></a>
+                {{/buttons}}
+            </td>
+        </tr>
     {{/categories}}
 </table>
 
@@ -38,27 +38,27 @@
         data-sortabledrop="admin.saveSorting('{{tableId}}')"
         data-ajaxurl="{{BASE_URI}}admin/core/admindatagroup/saveslugsorting/{{id}}"
 >
-{{#rows}}
-    <tr
-        id="{{fieldId}}"
-        class="{{rowState}}"
-    >
-        <td>
-            <i class="fa fa-sort"></i>
-            {{name}}
-        </td>
-        <td align="right">
-            {{#buttons}}
-                <a
-                    {{#rowId}}
+    {{#rows}}
+        <tr
+                id="{{fieldId}}"
+                class="{{rowState}}"
+        >
+            <td>
+                <i class="fa fa-sort"></i>
+                {{name}}
+            </td>
+            <td align="right">
+                {{#buttons}}
+                    <a
+                        {{#rowId}}
                         id="{{rowId}}"
-                    {{/rowId}}
-                    href="{{baseLink}}/{{action}}/{{id}}&key={{key}}"
+                        {{/rowId}}
+                        href="{{baseLink}}/{{action}}/{{id}}&key={{key}}"
                     class="{{icon}}"
                     title="{{text}}"
-                ></a>
-            {{/buttons}}
-        </td>
-    </tr>
-{{/rows}}
+                    ></a>
+                {{/buttons}}
+            </td>
+        </tr>
+    {{/rows}}
 </table>
