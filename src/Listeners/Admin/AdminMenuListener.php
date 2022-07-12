@@ -2,9 +2,9 @@
 
 namespace VitesseCms\Datagroup\Listeners\Admin;
 
+use Phalcon\Events\Event;
 use VitesseCms\Admin\Models\AdminMenu;
 use VitesseCms\Admin\Models\AdminMenuNavBarChildren;
-use Phalcon\Events\Event;
 
 class AdminMenuListener
 {
@@ -13,5 +13,9 @@ class AdminMenuListener
         $children = new AdminMenuNavBarChildren();
         $children->addChild('Data groups', 'admin/datagroup/admindatagroup/adminList');
         $adminMenu->addDropdown('DataDesign', $children);
+
+        $children = new AdminMenuNavBarChildren();
+        $children->addChild('Fix datagroups', 'admin/datagroup/adminfixdatagroups/index');
+        $adminMenu->addDropdown('Maintenance', $children);
     }
 }

@@ -25,7 +25,7 @@ class Migration_20210416 implements MigrationInterface
     }
 
     public function up(
-        ConfigServiceInterface $configService,
+        ConfigServiceInterface   $configService,
         TerminalServiceInterface $terminalService
     ): bool
     {

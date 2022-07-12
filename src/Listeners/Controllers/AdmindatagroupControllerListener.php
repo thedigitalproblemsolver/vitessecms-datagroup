@@ -2,13 +2,13 @@
 
 namespace VitesseCms\Datagroup\Listeners\Controllers;
 
-use VitesseCms\Admin\AbstractAdminController;
-use VitesseCms\Admin\Forms\AdminlistFormInterface;
-use VitesseCms\Datagroup\Controllers\AdmindatagroupController;
-use VitesseCms\Core\Helpers\ItemHelper;
-use VitesseCms\Datagroup\Models\Datagroup;
 use Phalcon\Events\Event;
 use stdClass;
+use VitesseCms\Admin\AbstractAdminController;
+use VitesseCms\Admin\Forms\AdminlistFormInterface;
+use VitesseCms\Core\Helpers\ItemHelper;
+use VitesseCms\Datagroup\Controllers\AdmindatagroupController;
+use VitesseCms\Datagroup\Models\Datagroup;
 
 class AdmindatagroupControllerListener
 {
@@ -200,9 +200,9 @@ class AdmindatagroupControllerListener
     }
 
     public function adminListFilter(
-        Event $event,
+        Event                   $event,
         AbstractAdminController $controller,
-        AdminlistFormInterface $form
+        AdminlistFormInterface  $form
     ): string
     {
         $form->addNameField($form);

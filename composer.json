@@ -2,7 +2,11 @@
   "name": "vitessecms/datagroup",
   "type": "library",
   "description": "Datagroup module for VitesseCms",
-  "keywords": ["php","phalcon","vitessecms"],
+  "keywords": [
+    "php",
+    "phalcon",
+    "vitessecms"
+  ],
   "homepage": "https://github.com/thedigitalproblemsolver/VitesseCMS",
   "license": "GPL-2.0-or-later",
   "version": "0.2.10",

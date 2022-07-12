@@ -2,16 +2,16 @@
 
 namespace VitesseCms\Datagroup\Fields;
 
+use Phalcon\Utils\Slug;
 use VitesseCms\Content\Models\Item;
 use VitesseCms\Core\Helpers\ItemHelper;
-use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Database\Utils\MongoUtil;
 use VitesseCms\Datafield\AbstractField;
+use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Helpers\ElementHelper;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
-use Phalcon\Utils\Slug;
 use VitesseCms\Form\Models\Attributes;
 
 class Datagroup extends AbstractField
@@ -28,9 +28,9 @@ class Datagroup extends AbstractField
     }
 
     public function buildItemFormElement(
-        AbstractForm $form,
-        Datafield $datafield,
-        Attributes $attributes,
+        AbstractForm       $form,
+        Datafield          $datafield,
+        Attributes         $attributes,
         AbstractCollection $data = null
     )
     {

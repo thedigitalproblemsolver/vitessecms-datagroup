@@ -2,10 +2,9 @@
 
 namespace VitesseCms\Datagroup\Factories;
 
+use VitesseCms\Database\Utils\MongoUtil;
 use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Datagroup\Models\Datagroup;
-use VitesseCms\Database\Utils\MongoUtil;
-use stdClass;
 
 class DatagroupFactory
 {
@@ -13,9 +12,9 @@ class DatagroupFactory
         string $title,
         string $template,
         string $component,
-        array $datafields = [],
-        bool $published = false,
-        bool $includeInSitemap = false,
+        array  $datafields = [],
+        bool   $published = false,
+        bool   $includeInSitemap = false,
         string $parentId = null,
         string $itemOrdering = ''
     ): Datagroup
@@ -40,9 +39,9 @@ class DatagroupFactory
 
     public static function createDatafieldEntry(
         Datafield $datafield,
-        bool $published = true,
-        bool $required = false,
-        bool $filterable = false
+        bool      $published = true,
+        bool      $required = false,
+        bool      $filterable = false
     ): array
     {
         return [

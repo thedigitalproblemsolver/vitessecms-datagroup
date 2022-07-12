@@ -27,7 +27,8 @@ class BlockDatagroupListener
     public function __construct(
         DatagroupRepository $datagroupRepository,
         DatafieldRepository $datafieldRepository
-    ){
+    )
+    {
         $this->datagroupRepository = $datagroupRepository;
         $this->datafieldRepository = $datafieldRepository;
     }
