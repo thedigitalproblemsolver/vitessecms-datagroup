@@ -2,13 +2,13 @@
 
 namespace VitesseCms\Datagroup\Models;
 
+use VitesseCms\Admin\Utils\AdminUtil;
+use VitesseCms\Database\AbstractCollection;
+use VitesseCms\Datafield\AbstractField;
 use VitesseCms\Datafield\Models\Datafield;
 use VitesseCms\Datafield\Repositories\DatafieldRepository;
-use VitesseCms\Database\AbstractCollection;
 use VitesseCms\Datagroup\Factories\DatagroupFactory;
-use VitesseCms\Admin\Utils\AdminUtil;
 use VitesseCms\Form\AbstractForm;
-use VitesseCms\Datafield\AbstractField;
 use VitesseCms\Form\Models\Attributes;
 
 class Datagroup extends AbstractCollection
@@ -106,7 +106,7 @@ class Datagroup extends AbstractCollection
                     endif;
                     $field->buildItemFormElement($form, $datafield, $attributes, $data);
 
-                    $this->di->eventsManager->fire($datafield->getType().':buildItemFormElement', $form, $data);
+                    $this->di->eventsManager->fire($datafield->getType() . ':buildItemFormElement', $form, $data);
 
                 endif;
             endif;
@@ -213,16 +213,16 @@ class Datagroup extends AbstractCollection
         return $this->slugDelimiter ?? '';
     }
 
+    public function getTemplate(): ?string
+    {
+        return $this->template;
+    }
+
     public function setTemplate(string $template): Datagroup
     {
         $this->template = $template;
 
         return $this;
-    }
-
-    public function getTemplate(): ?string
-    {
-        return $this->template;
     }
 
     public function setComponent(string $component): Datagroup

@@ -2,9 +2,9 @@
 
 namespace VitesseCms\Datagroup;
 
+use Phalcon\DiInterface;
 use VitesseCms\Admin\Utils\AdminUtil;
 use VitesseCms\Core\AbstractModule;
-use Phalcon\DiInterface;
 use VitesseCms\Datafield\Repositories\DatafieldRepository;
 use VitesseCms\Datagroup\Repositories\AdminRepositoryCollection;
 use VitesseCms\Datagroup\Repositories\DatagroupRepository;

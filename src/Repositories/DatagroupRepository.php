@@ -3,9 +3,9 @@
 namespace VitesseCms\Datagroup\Repositories;
 
 use VitesseCms\Database\Models\FindValue;
+use VitesseCms\Database\Models\FindValueIterator;
 use VitesseCms\Datagroup\Models\Datagroup;
 use VitesseCms\Datagroup\Models\DatagroupIterator;
-use VitesseCms\Database\Models\FindValueIterator;
 
 class DatagroupRepository
 {
@@ -45,7 +45,7 @@ class DatagroupRepository
 
     public function findFirst(
         ?FindValueIterator $findValues = null,
-        bool $hideUnpublished = true
+        bool               $hideUnpublished = true
     ): ?Datagroup
     {
         Datagroup::setFindPublished($hideUnpublished);
@@ -66,7 +66,7 @@ class DatagroupRepository
     }
 
     public function getPathToRoot(
-        Datagroup $datagroup,
+        Datagroup          $datagroup,
         ?DatagroupIterator $datagroupIterator = null
     ): DatagroupIterator
     {
