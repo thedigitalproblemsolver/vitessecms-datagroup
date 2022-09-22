@@ -24,7 +24,7 @@
   "require": {
     "vitessecms/admin": "~0.2.9",
     "vitessecms/core": "~0.2.22",
-    "vitessecms/database": "~0.2.5",
+    "vitessecms/database": "~0.2.6",
     "vitessecms/datafield": "~0.2.13",
     "vitessecms/form": "~0.2.9",
     "vitessecms/block": "~0.2.20"
