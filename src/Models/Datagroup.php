@@ -111,7 +111,7 @@ class Datagroup extends AbstractCollection
                     endif;
                     $field->buildItemFormElement($form, $datafield, $attributes, $data);
 
-                    $this->di->eventsManager->fire($datafield->getType() . ':buildItemFormElement', $form, $data);
+                    $this->getDI()->get('eventsManager')->fire($datafield->getType() . ':buildItemFormElement', $form, $data);
 
                 endif;
             endif;
