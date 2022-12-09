@@ -13,16 +13,6 @@ use VitesseCms\Form\Models\Attributes;
 
 class DataGroupForm extends AbstractFormWithRepository
 {
-    /**
-     * @var RepositoryInterface
-     */
-    protected $repositories;
-
-    /**
-     * @var Datagroup
-     */
-    protected $_entity;
-
     public function buildForm(): FormWithRepositoryInterface
     {
         $this->addText('%CORE_NAME%', 'name', (new Attributes())->setRequired()->setMultilang());
@@ -31,7 +21,7 @@ class DataGroupForm extends AbstractFormWithRepository
         $options = [];
         foreach ($files as $key => $label) :
             $selected = false;
-            if ($this->_entity->getTemplate() === $key) :
+            if ($this->entity->getTemplate() === $key) :
                 $selected = true;
             endif;
             $options[] = [
@@ -63,7 +53,7 @@ class DataGroupForm extends AbstractFormWithRepository
                 'datafield',
                 (new Attributes())->setInputClass('select2')
                     ->setOptions(ElementHelper::modelIteratorToOptions($this->repositories->datafield->findAll())))
-            ->addHtml($this->_entity->_('dataHtml'))
+            ->addHtml($this->entity->_('dataHtml'))
             ->addText(
                 'Category slug delimiter',
                 'slugCategoryDelimiter',
@@ -74,7 +64,7 @@ class DataGroupForm extends AbstractFormWithRepository
                 (new Attributes())->setRequired()->setInputClass('noLengthCheck')->setDefaultValue('-'))
             ->addToggle('%ADMIN_SITEMAP_INCLUDE%', 'sitemap');
 
-        if (empty($this->_entity->getParentId())) :
+        if (empty($this->entity->getParentId())) :
             $this->addToggle('%ADMIN_SORTABLE_LIST%', 'sortable');
         endif;
 
