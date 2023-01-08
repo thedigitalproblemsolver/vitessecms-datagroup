@@ -2,7 +2,6 @@
 
 namespace VitesseCms\Datagroup\Fields;
 
-use Phalcon\Utils\Slug;
 use VitesseCms\Content\Models\Item;
 use VitesseCms\Core\Helpers\ItemHelper;
 use VitesseCms\Database\AbstractCollection;
@@ -13,6 +12,7 @@ use VitesseCms\Form\AbstractForm;
 use VitesseCms\Form\Helpers\ElementHelper;
 use VitesseCms\Form\Interfaces\AbstractFormInterface;
 use VitesseCms\Form\Models\Attributes;
+use VitesseCms\Sef\Utils\SefUtil;
 
 class Datagroup extends AbstractField
 {
@@ -115,7 +115,7 @@ class Datagroup extends AbstractField
         if ($datagroupItem) :
             $slug = $datagroupItem->_('slug', $languageShort);
             if (is_string($slug)) :
-                return Slug::generate($slug);
+                return SefUtil::generateSlugFromString($slug);
             endif;
         endif;
 
