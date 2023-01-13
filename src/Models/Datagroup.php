@@ -41,6 +41,11 @@ class Datagroup extends AbstractCollection
      * @var string
      */
     public $slugDelimiter;
+
+    /**
+     * @var string
+     */
+    public $slugCategoryDelimiter;
     /**
      * @var string
      */
@@ -106,7 +111,7 @@ class Datagroup extends AbstractCollection
                     endif;
                     $field->buildItemFormElement($form, $datafield, $attributes, $data);
 
-                    $this->di->eventsManager->fire($datafield->getType() . ':buildItemFormElement', $form, $data);
+                    $this->getDI()->get('eventsManager')->fire($datafield->getType() . ':buildItemFormElement', $form, $data);
 
                 endif;
             endif;
@@ -211,6 +216,11 @@ class Datagroup extends AbstractCollection
     public function getSlugDelimiter(): string
     {
         return $this->slugDelimiter ?? '';
+    }
+
+    public function slugCategoryDelimiter(): string
+    {
+        return $this->slugCategoryDelimiter ?? '';
     }
 
     public function getTemplate(): ?string
