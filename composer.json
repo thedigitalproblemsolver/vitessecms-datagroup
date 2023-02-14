@@ -24,11 +24,11 @@
   "require": {
     "php": ">=8.1",
     "ext-phalcon": "5.1.4",
-    "vitessecms/admin": "~0.3.1",
-    "vitessecms/core": "~0.4.2",
+    "vitessecms/admin": "~0.3.2",
+    "vitessecms/core": "~0.4.4",
     "vitessecms/database": "~0.3.4",
-    "vitessecms/datafield": "~0.3.1",
-    "vitessecms/form": "~0.4.1",
+    "vitessecms/datafield": "~0.3.2",
+    "vitessecms/form": "~0.4.3",
     "vitessecms/block": "~0.4.1"
   }
 }
