@@ -4,6 +4,6 @@ namespace VitesseCms\Datagroup\Enums;
 
 enum DatagroupEnum: string
 {
-    case SERVICE_LISTENER = 'DatagroupListener';
+    case LISTENER = 'DatagroupListener';
     case GET_REPOSITORY = 'DatagroupListener:getRepository';
 }
