@@ -7,6 +7,7 @@ use VitesseCms\Core\Interfaces\InjectableInterface;
 use VitesseCms\Datafield\Repositories\DatafieldRepository;
 use VitesseCms\Datagroup\Blocks\Datagroup;
 use VitesseCms\Datagroup\Controllers\AdmindatagroupController;
+use VitesseCms\Datagroup\Enums\DatagroupEnum;
 use VitesseCms\Datagroup\Listeners\Admin\AdminMenuListener;
 use VitesseCms\Datagroup\Listeners\Blocks\BlockDatagroupListener;
 use VitesseCms\Datagroup\Listeners\Controllers\AdmindatagroupControllerListener;
@@ -22,5 +23,6 @@ class InitiateAdminListeners implements InitiateListenersInterface
             new DatagroupRepository(),
             new DatafieldRepository()
         ));
+        $di->eventsManager->attach(DatagroupEnum::LISTENER->value, new DatagroupListner(new DatagroupRepository()));
     }
 }
