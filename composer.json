@@ -29,6 +29,6 @@
     "vitessecms/database": "^1.0.1",
     "vitessecms/datafield": "^1.2.1",
     "vitessecms/form": "^1.1.2",
-    "vitessecms/block": "^1.3.0"
+    "vitessecms/block": "^1.4.0"
   }
 }
