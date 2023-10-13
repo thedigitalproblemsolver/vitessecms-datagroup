@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace VitesseCms\Datagroup\Models;
 
@@ -111,7 +113,11 @@ class Datagroup extends AbstractCollection
                     endif;
                     $field->buildItemFormElement($form, $datafield, $attributes, $data);
 
-                    $this->getDI()->get('eventsManager')->fire($datafield->getType() . ':buildItemFormElement', $form, $data);
+                    $this->getDI()->get('eventsManager')->fire(
+                        $datafield->getType() . ':buildItemFormElement',
+                        $form,
+                        $data
+                    );
 
                 endif;
             endif;
