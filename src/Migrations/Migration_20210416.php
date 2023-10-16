@@ -1,47 +1,36 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace VitesseCms\Datagroup\Migrations;
 
-use VitesseCms\Cli\Services\TerminalServiceInterface;
-use VitesseCms\Configuration\Services\ConfigServiceInterface;
-use VitesseCms\Datafield\Repositories\DatafieldRepository;
-use VitesseCms\Datagroup\Repositories\AdminRepositoryCollection;
-use VitesseCms\Datagroup\Repositories\DatagroupRepository;
-use VitesseCms\Install\Interfaces\MigrationInterface;
+use stdClass;
+use VitesseCms\Database\AbstractMigration;
+use VitesseCms\Datagroup\Enums\DatagroupEnum;
 
-class Migration_20210416 implements MigrationInterface
+class Migration_20210416 extends AbstractMigration
 {
-    /**
-     * @var AdminRepositoryCollection
-     */
-    private $repository;
-
-    public function __construct()
-    {
-        $this->repository = new AdminRepositoryCollection(
-            new DatagroupRepository(),
-            new DatafieldRepository()
-        );
-    }
-
-    public function up(
-        ConfigServiceInterface   $configService,
-        TerminalServiceInterface $terminalService
-    ): bool
+    public function up(): bool
     {
         $result = true;
-        if (!$this->parseDatagroups($terminalService)) :
+        if (!$this->parseDatagroups()) :
             $result = false;
         endif;
 
         return $result;
     }
 
-    private function parseDatagroups(TerminalServiceInterface $terminalService): bool
+    private function parseDatagroups(): bool
     {
         $result = true;
-        $datagroups = $this->repository->datagroup->findAll(null, false);
-        $dir = str_replace('install/src/Migrations', 'core/src/Services/../../../../../vendor/vitessecms/mustache/src/', __DIR__);
+        $datagroupRepository = $this->eventsManager->fire(DatagroupEnum::GET_REPOSITORY->value, new stdClass());
+
+        $datagroups = $datagroupRepository->findAll(null, false);
+        $dir = str_replace(
+            'install/src/Migrations',
+            'core/src/Services/../../../../../vendor/vitessecms/mustache/src/',
+            __DIR__
+        );
         $search = [
             'default/',
             'templates/',
@@ -63,13 +52,15 @@ class Migration_20210416 implements MigrationInterface
             if (substr($template, 0, 6) === "views/") :
                 $datagroup->setTemplate($template)->save();
             else :
-                $terminalService->printError('wrong template "' . $template . '" for datagroup "' . $datagroup->getNameField() . '"');
+                $this->terminalService->printError(
+                    'wrong template "' . $template . '" for datagroup "' . $datagroup->getNameField() . '"'
+                );
                 $result = false;
             endif;
 
             $datagroups->next();
         endwhile;
-        $terminalService->printMessage('Datagroups template repaired');
+        $this->terminalService->printMessage('Datagroups template repaired');
 
         return $result;
     }
