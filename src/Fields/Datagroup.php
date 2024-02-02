@@ -1,10 +1,18 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace VitesseCms\Datagroup\Fields;
 
+use VitesseCms\Content\Enum\ItemEnum;
 use VitesseCms\Content\Models\Item;
+use VitesseCms\Content\Repositories\ItemRepository;
 use VitesseCms\Core\Helpers\ItemHelper;
 use VitesseCms\Database\AbstractCollection;
+use VitesseCms\Database\Models\FindOrder;
+use VitesseCms\Database\Models\FindOrderIterator;
+use VitesseCms\Database\Models\FindValue;
+use VitesseCms\Database\Models\FindValueIterator;
 use VitesseCms\Database\Utils\MongoUtil;
 use VitesseCms\Datafield\AbstractField;
 use VitesseCms\Datafield\Models\Datafield;
@@ -14,60 +22,72 @@ use VitesseCms\Form\Interfaces\AbstractFormInterface;
 use VitesseCms\Form\Models\Attributes;
 use VitesseCms\Sef\Utils\SefUtil;
 
-class Datagroup extends AbstractField
+final class Datagroup extends AbstractField
 {
+    private readonly ItemRepository $itemRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->itemRepository = $this->eventsManager->fire(ItemEnum::GET_REPOSITORY, new \stdClass());
+    }
+
     public static function beforeMaincontent(Item $item, Datafield $datafield): void
     {
         $test = $item->_($datafield->getCallingName());
-        if (is_string($test) && MongoUtil::isObjectId($test)) :
+        if (is_string($test) && MongoUtil::isObjectId($test)) {
             $object = Item::findById($item->_($datafield->getCallingName()));
-            if ($object) :
-                $item->set($datafield->getCallingName() . 'Display', $object);
-            endif;
-        endif;
+            if ($object) {
+                $item->set($datafield->getCallingName().'Display', $object);
+            }
+        }
     }
 
     public function buildItemFormElement(
-        AbstractForm       $form,
-        Datafield          $datafield,
-        Attributes         $attributes,
+        AbstractForm $form,
+        Datafield $datafield,
+        Attributes $attributes,
         AbstractCollection $data = null
-    )
-    {
-        Item::setFindValue('datagroup', $datafield->getDatagroup());
-        if ($datafield->_('itemParent')) :
-            Item::setFindValue('parentId', $datafield->_('itemParent'));
-        endif;
+    ): void {
+        $findValues = new FindValueIterator([new FindValue('datagroup', $datafield->getDatagroup())]);
+
+        if ($datafield->has('itemParent')) {
+            $findValues->add(new FindValue('parentId', $datafield->getString('itemParent')));
+        }
+
+        $items = $this->itemRepository->findAll($findValues);
 
         $options = [];
-        /** @var Item $item */
-        foreach (Item::findAll() as $item) :
-            $value = (string)$item->getId();
+        while ($items->valid()) {
+            $item = $items->current();
+            $value = (string) $item->getId();
             $name = [$item->getNameField()];
 
-            if ($item->_('formValue')) :
-                $value = $item->_('formValue');
-            endif;
+            if ($item->has('formValue')) {
+                $value = $item->getString('formValue');
+            }
 
-            if ($item->getParentId()) :
+            if ($item->getParentId()) {
                 $name = [];
                 $pathItems = ItemHelper::getPathFromRoot($item);
                 /** @var Item $pathItem */
-                foreach ($pathItems as $pathItem) :
+                foreach ($pathItems as $pathItem) {
                     $name[] = $pathItem->getNameField();
-                endforeach;
-            endif;
+                }
+            }
             $options[$value] = implode(' > ', $name);
-        endforeach;
+            $items->next();
+        }
         $options = array_flip($options);
         ksort($options);
         $options = array_flip($options);
 
         $attributes->setOptions(ElementHelper::arrayToSelectOptions($options));
 
-        if ($datafield->_('multiple')) :
+        if ($datafield->_('multiple')) {
             $attributes->setMultiple()->setInputClass('select2');
-        endif;
+        }
 
         $form->addDropdown(
             $datafield->getNameField(),
@@ -78,46 +98,64 @@ class Datagroup extends AbstractField
 
     public function renderFilter(AbstractFormInterface $filter, Datafield $datafield): void
     {
-        Item::addFindOrder('name');
-        Item::setFindValue('datagroup', $datafield->getDatagroup());
-        if ($datafield->_('itemParent')) :
-            Item::setFindValue('parentId', $datafield->_('itemParent'));
-        endif;
+        $findValues = new FindValueIterator([new FindValue('datagroup', $datafield->getDatagroup())]);
+
+        if ($datafield->has('itemParent')) {
+            $findValues->add(new FindValue('parentId', $datafield->getString('itemParent')));
+        }
 
         $filter->addDropdown(
             $datafield->getNameField(),
-            $this->getFieldname($datafield) . '[]',
+            $this->getFieldname($datafield).'[]',
             (new Attributes())->setMultiple()
                 ->setInputClass('select2')
                 ->setNoEmptyText()
-                ->setOptions(Item::findAll())
+                ->setOptions(
+                    ElementHelper::modelIteratorToOptions(
+                        $this->itemRepository->findAll(
+                            $findValues,
+                            true,
+                            null,
+                            new FindOrderIterator([new FindOrder('name', 1)])
+                        )
+                    )
+                )
         );
     }
 
     public function renderAdminlistFilter(AbstractFormInterface $filter, Datafield $datafield): void
     {
-        Item::addFindOrder('name');
-        Item::setFindValue('datagroup', $datafield->getDatagroup());
-        if ($datafield->_('itemParent')) :
-            Item::setFindValue('parentId', $datafield->_('itemParent'));
-        endif;
+        $findValues = new FindValueIterator([new FindValue('datagroup', $datafield->getDatagroup())]);
+
+        if ($datafield->has('itemParent')) {
+            $findValues->add(new FindValue('parentId', $datafield->getString('itemParent')));
+        }
 
         $filter->addDropdown(
             $datafield->getNameField(),
             $this->getFieldname($datafield),
-            (new Attributes())->setOptions(Item::findAll())
+            (new Attributes())->setOptions(
+                ElementHelper::modelIteratorToOptions(
+                    $this->itemRepository->findAll(
+                        $findValues,
+                        true,
+                        null,
+                        new FindOrderIterator([new FindOrder('name', 1)])
+                    )
+                )
+            )
         );
     }
 
     public function renderSlugPart(AbstractCollection $item, string $languageShort, Datafield $datafield): string
     {
-        $datagroupItem = Item::findById($item->_($datafield->_('calling_name')));
-        if ($datagroupItem) :
-            $slug = $datagroupItem->_('slug', $languageShort);
-            if (is_string($slug)) :
+        $datagroupItem = $this->itemRepository->getById($item->getString($datafield->getCallingName()));
+        if (null !== $datagroupItem) {
+            $slug = $datagroupItem->getString('slug', $languageShort);
+            if (!empty($slug)) {
                 return SefUtil::generateSlugFromString($slug);
-            endif;
-        endif;
+            }
+        }
 
         return '';
     }
