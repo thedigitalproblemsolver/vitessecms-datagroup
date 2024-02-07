@@ -1,4 +1,5 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 namespace VitesseCms\Datagroup\Listeners;
 
@@ -10,11 +11,14 @@ use VitesseCms\Datagroup\Repositories\DatagroupRepository;
 
 class InitiateListeners implements InitiateListenersInterface
 {
-    public static function setListeners(InjectableInterface $di): void
+    public static function setListeners(InjectableInterface $injectable): void
     {
-        if ($di->user->hasAdminAccess()) :
-            $di->eventsManager->attach('adminMenu', new AdminMenuListener());
+        if ($injectable->user->hasAdminAccess()) :
+            $injectable->eventsManager->attach('adminMenu', new AdminMenuListener());
         endif;
-        $di->eventsManager->attach(DatagroupEnum::LISTENER->value, new DatagroupListner(new DatagroupRepository()));
+        $injectable->eventsManager->attach(
+            DatagroupEnum::LISTENER->value,
+            new DatagroupListner(new DatagroupRepository())
+        );
     }
 }
